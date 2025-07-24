@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="अपनी बिल्कुल सही  उम्र तुरंत जानें! हमारा ऑनलाइन आयु कैलकुलेटर आपको जन्मतिथि से वर्ष, महीने और दिन में अपनी उम्र निकालने में मदद करता है। तेज़, बिल्कुल सही  और उपयोग में आसान।">
+    <meta name="keywords" content="आयु कैलकुलेटर, उम्र कैलकुलेटर, जन्मतिथि से उम्र, बिल्कुल सही  उम्र, ऑनलाइन आयु कैलकुलेटर, मुफ्त आयु कैलकुलेटर, उम्र कैसे निकालें, age calculator, calculate age, birth date, exact age">
+    <title>AgeCalc Pro - बिल्कुल सही  आयु कैलकुलेटर | Calculate Your Exact Age</title>
+    <!-- Tailwind CSS CDN - Fast loading via CDN and browser caching -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter - Efficiently loaded -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons - Fast loading via CDN and browser caching -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom styles for the Inter font and overall body */
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            background-color: #f0f4f8; /* Light background */
+        }
+        /* Ensure main content area expands to fill available space */
+        #content {
+            flex-grow: 1;
+        }
+        /* Custom animation for result display */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .animate-fadeInScale {
+            animation: fadeInScale 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Header Section -->
+    <header class="bg-blue-700 text-white p-4 shadow-lg rounded-b-lg">
+        <nav class="container mx-auto flex justify-between items-center">
+            <!-- Site Name and Logo -->
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-calculator text-2xl"></i>
+                <a href="#home" class="text-2xl font-bold tracking-wide" data-key="siteName">AgeCalc Pro</a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <ul class="hidden md:flex space-x-6 text-lg">
+                <li><a href="#home" class="hover:text-blue-200 transition duration-300" data-key="navHome">Home</a></li>
+                <li><a href="#about" class="hover:text-blue-200 transition duration-300" data-key="navAbout">About Us</a></li>
+                <li><a href="#contact" class="hover:text-blue-200 transition duration-300" data-key="navContact">Contact Us</a></li>
+                <li><a href="#terms" class="hover:text-blue-200 transition duration-300" data-key="navTerms">Terms & Conditions</a></li>
+            </ul>
+
+            <!-- Language Switcher -->
+            <div class="flex items-center space-x-4">
+                <select id="language-switcher" class="bg-blue-600 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    <option value="en">English</option>
+                    <option value="hi">हिंदी</option>
+                </select>
+
+                <!-- Mobile Menu Button (Hamburger Icon) -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white text-2xl focus:outline-none">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-75 z-40 hidden"></div>
+    <div id="mobile-menu" class="fixed top-0 right-0 w-64 h-full bg-white z-50 p-6 shadow-xl transform translate-x-full transition-transform duration-300 ease-in-out">
+        <button id="close-mobile-menu" class="absolute top-4 right-4 text-gray-600 text-2xl focus:outline-none">
+            <i class="fas fa-times"></i>
+        </button>
+        <nav class="flex flex-col space-y-4 mt-8">
+            <a href="#home" class="text-xl text-gray-800 hover:text-blue-600 transition duration-300 py-2 rounded-md" data-key="navHome">Home</a>
+            <a href="#about" class="text-xl text-gray-800 hover:text-blue-600 transition duration-300 py-2 rounded-md" data-key="navAbout">About Us</a>
+            <a href="#contact" class="text-xl text-gray-800 hover:text-blue-600 transition duration-300 py-2 rounded-md" data-key="navContact">Contact Us</a>
+            <a href="#terms" class="text-xl text-gray-800 hover:text-blue-600 transition duration-300 py-2 rounded-md" data-key="navTerms">Terms & Conditions</a>
+        </nav>
+    </div>
+
+    <!-- Main Content Area -->
+    <main id="content" class="container mx-auto p-4 flex flex-col items-center justify-center min-h-[calc(100vh-160px)]">
+        <!-- Content will be dynamically loaded here -->
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-gray-300 p-8 rounded-t-lg mt-auto">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <!-- Section 1: Site Name and Logo -->
+            <div class="flex flex-col items-center md:items-start">
+                <div class="flex items-center space-x-2 mb-2">
+                    <i class="fas fa-calculator text-3xl text-blue-400"></i>
+                    <span class="text-2xl font-bold text-white" data-key="siteName">AgeCalc Pro</span>
+                </div>
+                <p class="text-sm" data-key="footerTagline">Your reliable partner for instant age calculations.</p>
+            </div>
+
+            <!-- Section 2: Pages -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-white" data-key="footerQuickLinks">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="#home" class="hover:text-blue-400 transition duration-300" data-key="navHome">Home</a></li>
+                    <li><a href="#about" class="hover:text-blue-400 transition duration-300" data-key="navAbout">About Us</a></li>
+                    <li><a href="#contact" class="hover:text-blue-400 transition duration-300" data-key="navContact">Contact Us</a></li>
+                    <li><a href="#terms" class="hover:text-blue-400 transition duration-300" data-key="navTerms">Terms & Conditions</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 3: Social Icons -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-white" data-key="footerConnect">Connect With Us</h3>
+                <div class="flex justify-center md:justify-start space-x-4 text-2xl">
+                    <a href="#" class="hover:text-blue-400 transition duration-300"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover:text-blue-400 transition duration-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" target="_blank" class="hover:text-blue-400 transition duration-300"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-blue-400 transition duration-300"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright Info -->
+        <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm text-gray-400">
+            <p><span data-key="copyrightText">&copy; </span><span id="current-year"></span> <span data-key="siteName">AgeCalc Pro</span><span data-key="allRightsReserved">. All rights reserved.</span></p>
+        </div>
+    </footer>
+
+    <!-- All JavaScript is placed at the end of the body for faster perceived loading -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const contentDiv = document.getElementById('content');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+            const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+            const languageSwitcher = document.getElementById('language-switcher');
+            const navLinks = document.querySelectorAll('nav a');
+            const footerNavLinks = document.querySelectorAll('footer a');
+
+            // --- Translations Object (All content stored in JS for instant language switching) ---
+            const translations = {
+                en: {
+                    siteName: "AgeCalc Pro",
+                    navHome: "Home",
+                    navAbout: "About Us",
+                    navContact: "Contact Us",
+                    navTerms: "Terms & Conditions",
+                    footerTagline: "Your reliable partner for instant age calculations.",
+                    footerQuickLinks: "Quick Links",
+                    footerConnect: "Connect With Us",
+                    copyrightText: "&copy; ",
+                    allRightsReserved: ". All rights reserved.",
+
+                    // Home Page
+                    homeTitle: "Age Calculator",
+                    homeSummaryHeading: "Know Your Exact Age Instantly!",
+                    homeSummaryContent: "Do you want to know how many years, months, and days old you are? Our <strong>online age calculator</strong> figures out your <strong>exact age</strong> when you enter your <strong>birth date</strong>. This tool is <strong> quick, precise, and simple to use.</strong> It gives you all the age-related information you need in one place <strong>Calculate your age</strong> today and find out how old you are!",
+                    homeInstruction: " <strong>Enter your birth date to see your exact age </strong>",
+                    birthDateLabel: "Your Birth Date:",
+                    calculateButton: "Calculate Age",
+                    yearsLabel: "Years",
+                    monthsLabel: "Months",
+                    daysLabel: "Days",
+                    errorMessageInvalidDate: "Please select your birth date.",
+                    errorMessageFutureDate: "Birth date cannot be in the future.",
+
+                    // About Us Page
+                    aboutTitle: "About Us",
+                    aboutPara1: "AgeCalc Pro greetings! The quickly and precise calculating age which you can access online. We are committed to giving everyone an easy, efficient, and trustworthy means of calculating their age. ",
+                    aboutPara2: "We make it quick and easy to get accurate age details. Retirement age, knowing your precise age in years, months and days; calculating another person's age for a special event; regardless of the reason, AgeCalc Pro is at your service! ",
+                    aboutPara3: "We are committed to giving you the best age and date time calculator accurately, and in the most user-friendly manner. And we'll constantly be working to make our service better. We welcome any ideas that you may have to make AgeCalc Pro better. Thank you for visiting AgeCalc Pro. ",
+
+                    // Contact Us Page
+                    contactTitle: "Contact Us",
+                    contactInstruction: "If you have any questions, feedback or suggestions we would love to hear from you! ",
+                    contactEmail: "Email:",
+                    contactPhone: "Phone:",
+                    contactAddress: "Address:",
+                    contactFormInstruction: "Alternatively you can complete the form below and we will respond to you as soon as possible.",
+                    nameLabel: "Name:",
+                    namePlaceholder: "Your Name",
+                    emailLabel: "Email:",
+                    emailPlaceholder: "your.email@example.com",
+                    messageLabel: "Message:",
+                    messagePlaceholder: "Your message...",
+                    sendMessageButton: "Send Message",
+
+                    // Terms & Conditions Page
+                    termsTitle: "Terms & Conditions",
+                    termsAcceptanceHeading: "1. Acceptance of Terms",
+                    termsAcceptanceContent: "By browsing and using our website, AgeCalc Pro (the \"Website\"), you accept these Terms and Conditions (\"Terms\"). If you do not agree with these Terms, please refrain from using the website. ",
+                    termsUseHeading: "2. Use of the Website",
+                    termsUseContent: "AgeCalc Pro offers an online age calculator for personal use only. The information given by the calculator, is for information purposes only and must not be professional advice.",
+                    termsAccuracyHeading: "3. Accuracy of Information",
+                    termsAccuracyContent: "We make every effort to give you an exact age calculator, but we cannot assure that all the time the results are 100% correct as a result of variation in date systems, leap years, or time zones. You should consider these results only an estimate. ",
+                    termsPrivacyHeading: "4. Privacy Policy",
+                    termsPrivacyContent: "We value your privacy greatly. We don't store or log any personal birth date data that you enter into the calculator. More details on how we treat data can be found in our Privacy Policy (if used ) ",
+                    termsIPHeading: "5. Intellectual Property",
+                    termsIPContent: "All content on this Website including text, graphics, logos, and software belong to AgeCalc Pro or its content suppliers and are the subject of intellectual property law. ",
+                    termsLiabilityHeading: "6. Limitation of Liability",
+                    termsLiabilityContent: "AgeCalc Pro will not be responsible for direct, indirect, incidental, consequential or punitive damages arising out of your use of or access to the Website. ",
+                    termsChangesHeading: "7. Changes to Terms",
+                    termsChangesContent: "We may update or change these Terms at any time. Your continued use of the Website after a modification to the Terms of Use constitutes your agreement to the new Terms.",
+
+                    // 404 Page
+                    pageNotFoundTitle: "404 - Page Not Found",
+                    pageNotFoundMessage: "The page you are looking for does not exist.",
+                    goToHomeButton: "Go to Home"
+                },
+                hi: {
+                    siteName: "एजकैल्क प्रो",
+                    navHome: "होम",
+                    navAbout: "हमारे बारे में",
+                    navContact: "हमसे संपर्क करें",
+                    navTerms: "नियम और शर्तें",
+                    footerTagline: "तत्काल आयु गणना के लिए आपका विश्वसनीय साथी।",
+                    footerQuickLinks: "त्वरित लिंक",
+                    footerConnect: "हमसे जुड़ें",
+                    copyrightText: "&copy; ",
+                    allRightsReserved: ". सर्वाधिकार सुरक्षित।",
+
+                    // Home Page
+                    homeTitle: "आयु कैलकुलेटर",
+                    homeSummaryHeading: "अपनी बिल्कुल सही  उम्र तुरंत जानें!",
+                    homeSummaryContent: "क्या आप जानना चाहते हैं कि आप कितने साल, महीने और दिन के हैं? हमारा <strong>ऑनलाइन आयु कैलकुलेटर</strong> आपकी <strong>जन्म तिथि</strong> दर्ज करके आपकी <strong>बिल्कुल सही  उम्र</strong> की गणना करता है। यह टूल <strong>तेज़, बिल्कुल सही  और उपयोग में आसान</strong> है, जो आपको अपनी उम्र से जुड़ी हर जानकारी एक ही जगह पर देता है। आज ही अपनी <strong>उम्र की गणना करें</strong> और जानें कि आप कितने बड़े हैं!",
+                    homeInstruction: "अपनी जन्म तिथि दर्ज करें और अपनी बिल्कुल सही  उम्र जानें!",
+                    birthDateLabel: "आपकी जन्म तिथि:",
+                    calculateButton: "उम्र की गणना करें",
+                    yearsLabel: "वर्ष",
+                    monthsLabel: "महीने",
+                    daysLabel: "दिन",
+                    errorMessageInvalidDate: "कृपया अपनी जन्म तिथि का चयन करें।",
+                    errorMessageFutureDate: "जन्म तिथि भविष्य में नहीं हो सकती।",
+
+                    // About Us Page
+                    aboutTitle: "हमारे बारे में",
+                    aboutPara1: "AgeCalc प्रो बधाई! जल्दी और बिल्कुल सही  गणना आयु जिसे आप ऑनलाइन एक्सेस कर सकते हैं। हम सभी को उनकी उम्र की गणना करने का एक आसान, कुशल और भरोसेमंद साधन देने के लिए प्रतिबद्ध हैं।",
+                    aboutPara2: " हम बिल्कुल सही  आयु विवरण प्राप्त करने के लिए इसे त्वरित और आसान बनाते हैं। सेवानिवृत्ति की आयु, वर्षों, महीनों और दिनों में आपकी बिल्कुल सही  आयु जानना; एक विशेष घटना के लिए किसी अन्य व्यक्ति की आयु की गणना करना; कारण की परवाह किए बिना, AgeCalc Pro आपकी सेवा में है!।",
+                    aboutPara3: "हम आपको सबसे अच्छी उम्र और तारीख समय कैलकुलेटर सही, और सबसे उपयोगकर्ता के अनुकूल तरीके से देने के लिए प्रतिबद्ध हैं। और हम अपनी सेवा को बेहतर बनाने के लिए लगातार काम करेंगे। हम किसी भी विचार का स्वागत करते हैं जिसे आपको AgeCalc Pro को बेहतर बनाना पड़ सकता है। AgeCalc Pro पर आने के लिए धन्यवाद।",
+
+                    // Contact Us Page
+                    contactTitle: "हमसे संपर्क करें",
+                    contactInstruction: "यदि आपके कोई प्रश्न, प्रतिक्रिया या सुझाव हैं, तो हम आपसे सुनना पसंद करेंगे! ",
+                    contactEmail: "ईमेल:",
+                    contactPhone: "फ़ोन:",
+                    contactAddress: "पता:",
+                    contactFormInstruction: "वैकल्पिक रूप से आप नीचे दिए गए फॉर्म को पूरा कर सकते हैं और हम आपको जल्द से जल्द जवाब देंगे।",
+                    nameLabel: "नाम:",
+                    namePlaceholder: "आपका नाम",
+                    emailLabel: "ईमेल:",
+                    emailPlaceholder: "आपका.ईमेल@उदाहरण.कॉम",
+                    messageLabel: "संदेश:",
+                    messagePlaceholder: "आपका संदेश...",
+                    sendMessageButton: "संदेश भेजें",
+
+                    // Terms & Conditions Page
+                    termsTitle: "नियम और शर्तें",
+                    termsAcceptanceHeading: "1. शर्तों की स्वीकृति",
+                    termsAcceptanceContent: " हमारी वेबसाइट, AgeCalc Pro (वेबसाइट) को ब्राउज़ करके और उपयोग करके, आप इन नियमों और शर्तों (नियम) को स्वीकार करते हैं। यदि आप इन शर्तों से सहमत नहीं हैं, तो कृपया वेबसाइट का उपयोग करने से बचें।",
+                    termsUseHeading: "2. वेबसाइट का उपयोग",
+                    termsUseContent: " AgeCalc Pro केवल व्यक्तिगत उपयोग के लिए एक ऑनलाइन आयु कैलकुलेटर प्रदान करता है। कैलकुलेटर द्वारा दी गई जानकारी, केवल सूचना उद्देश्यों के लिए है और पेशेवर सलाह नहीं होनी चाहिए।",
+                    termsAccuracyHeading: "3. जानकारी की बिल्कुल सही ता",
+                    termsAccuracyContent: " हम आपको एक बिल्कुल सही  आयु कैलकुलेटर देने के लिए हर संभव प्रयास करते हैं, लेकिन हम यह आश्वासन नहीं दे सकते हैं कि सभी समय परिणाम दिनांक प्रणालियों, लीप वर्षों या समय क्षेत्रों में भिन्नता के परिणामस्वरूप 100% सही हैं। आपको इन परिणामों पर केवल एक अनुमान पर विचार करना चाहिए।",
+                    termsPrivacyHeading: "4. गोपनीयता नीति",
+                    termsPrivacyContent: " हम आपकी गोपनीयता को बहुत महत्व देते हैं। हम आपके द्वारा कैलकुलेटर में दर्ज किए गए किसी भी व्यक्तिगत जन्म तिथि डेटा को संग्रहीत या लॉग नहीं करते हैं। हम डेटा का इलाज कैसे करते हैं, इस बारे में अधिक जानकारी हमारी गोपनीयता नीति (यदि उपयोग किया जाता है) में पाई जा सकती है।",
+                    termsIPHeading: "5. बौद्धिक संपदा",
+                    termsIPContent: "ग्राफिक्स, लोगो और सॉफ़्टवेयर सहित इस वेबसाइट की सभी सामग्री AgeCalc Pro या इसके सामग्री आपूर्तिकर्ताओं से संबंधित है और बौद्धिक संपदा कानून का विषय है।",
+                    termsLiabilityHeading: "6. दायित्व की सीमा",
+                    termsLiabilityContent: "AgeCalc Pro वेबसाइट के आपके उपयोग या उपयोग से उत्पन्न होने वाले प्रत्यक्ष, अप्रत्यक्ष, आकस्मिक, परिणामी या दंडात्मक नुकसान के लिए जिम्मेदार नहीं होगा।",
+                    termsChangesHeading: "7. शर्तों में परिवर्तन",
+                    termsChangesContent: "ैशर्तों में परिवर्तन हम किसी भी समय इन शर्तों को अपडेट या बदल सकते हैं। उपयोग की शर्तों में संशोधन के बाद वेबसाइट का आपका निरंतर उपयोग नई शर्तों के लिए आपके समझौते का गठन करता है।",
+
+                    // 404 Page
+                    pageNotFoundTitle: "404 - पेज नहीं मिला",
+                    pageNotFoundMessage: "आप जिस पेज की तलाश कर रहे हैं वह मौजूद नहीं है।",
+                    goToHomeButton: "होम पर जाएं"
+                }
+            };
+
+            let currentLanguage = localStorage.getItem('ageCalcLanguage') || 'en'; // Default to English
+
+            // Function to update all content based on selected language
+            function updateContentLanguage(lang) {
+                currentLanguage = lang;
+                localStorage.setItem('ageCalcLanguage', lang);
+                document.documentElement.lang = lang; // Update HTML lang attribute
+                languageSwitcher.value = lang; // Set switcher to current language
+
+                // Update static elements in header and footer
+                document.querySelectorAll('[data-key]').forEach(element => {
+                    const key = element.getAttribute('data-key');
+                    if (translations[currentLanguage][key]) {
+                        // Use innerHTML for text that might contain strong tags (like summary)
+                        element.innerHTML = translations[currentLanguage][key];
+                    }
+                });
+
+                // Reload current page content to apply new language
+                const initialHash = window.location.hash.substring(1);
+                loadPage(initialHash || 'home'); // Load home if no hash
+            }
+
+            // Function to load page content
+            function loadPage(page) {
+                let htmlContent = '';
+                const t = translations[currentLanguage]; // Shorthand for current translations
+
+                switch (page) {
+                    case 'home':
+                        htmlContent = `
+                            <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md text-center">
+                                <h1 class="text-4xl font-extrabold text-blue-700 mb-6">${t.homeTitle}</h1>
+                                
+                                <!-- SEO Optimized Summary for Google Rank -->
+                                <div class="mb-8 p-4 bg-blue-50 border-l-4 border-blue-500 text-blue-800 rounded-lg text-left">
+                                    <h2 class="text-xl font-bold mb-2">${t.homeSummaryHeading}</h2>
+                                    <p class="text-base">
+                                        ${t.homeSummaryContent}
+                                    </p>
+                                </div>
+
+                                <p class="text-lg text-gray-700 mb-8">${t.homeInstruction}</p>
+
+                                <div class="mb-6">
+                                    <label for="birthDate" class="block text-gray-700 text-left text-sm font-semibold mb-2">${t.birthDateLabel}</label>
+                                    <input type="date" id="birthDate" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" required>
+                                </div>
+
+                                <button id="calculateAgeBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition duration-300 ease-in-out transform hover:scale-105 shadow-md">
+                                    ${t.calculateButton}
+                                </button>
+
+                                <!-- Premium Result Display Boxes -->
+                                <div id="result-boxes" class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 hidden">
+                                    <!-- Years Box -->
+                                    <div id="years-box" class="bg-gradient-to-br from-blue-500 to-blue-700 text-white p-6 rounded-xl shadow-lg flex flex-col items-center justify-center animate-fadeInScale">
+                                        <i class="fas fa-calendar-alt text-4xl mb-3 text-blue-200"></i>
+                                        <p class="text-xl font-semibold mb-1">${t.yearsLabel}</p>
+                                        <p class="text-4xl font-extrabold" id="years-display">0</p>
+                                    </div>
+
+                                    <!-- Months Box -->
+                                    <div id="months-box" class="bg-gradient-to-br from-purple-500 to-purple-700 text-white p-6 rounded-xl shadow-lg flex flex-col items-center justify-center animate-fadeInScale">
+                                        <i class="fas fa-calendar text-4xl mb-3 text-purple-200"></i>
+                                        <p class="text-xl font-semibold mb-1">${t.monthsLabel}</p>
+                                        <p class="text-4xl font-extrabold" id="months-display">0</p>
+                                    </div>
+
+                                    <!-- Days Box -->
+                                    <div id="days-box" class="bg-gradient-to-br from-green-500 to-green-700 text-white p-6 rounded-xl shadow-lg flex flex-col items-center justify-center animate-fadeInScale">
+                                        <i class="fas fa-calendar-day text-4xl mb-3 text-green-200"></i>
+                                        <p class="text-xl font-semibold mb-1">${t.daysLabel}</p>
+                                        <p class="text-4xl font-extrabold" id="days-display">0</p>
+                                    </div>
+                                </div>
+
+                                <div id="error-message" class="mt-4 p-4 bg-red-100 border border-red-300 text-red-700 rounded-lg hidden">
+                                    ${t.errorMessageInvalidDate}
+                                </div>
+                            </div>
+                        `;
+                        break;
+                    case 'about':
+                        htmlContent = `
+                            <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-2xl text-center">
+                                <h1 class="text-4xl font-extrabold text-blue-700 mb-6">${t.aboutTitle}</h1>
+                                <p class="text-lg text-gray-700 mb-4 text-left">
+                                    ${t.aboutPara1}
+                                </p>
+                                <p class="text-lg text-gray-700 mb-4 text-left">
+                                    ${t.aboutPara2}
+                                </p>
+                                <p class="text-lg text-gray-700 text-left">
+                                    ${t.aboutPara3}
+                                </p>
+                            </div>
+                        `;
+                        break;
+                    case 'contact':
+                        htmlContent = `
+                            <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-2xl text-center">
+                                <h1 class="text-4xl font-extrabold text-blue-700 mb-6">${t.contactTitle}</h1>
+                                <p class="text-lg text-gray-700 mb-8">
+                                    ${t.contactInstruction}
+                                </p>
+                                <div class="text-left space-y-4">
+                                    <p class="text-lg text-gray-700">
+                                        <strong>${t.contactEmail}</strong> <a href="mailto:bishalkumarranjan54@gmail.com" class="text-blue-600 hover:underline"> bishalkumarranjan54@gmail.com</a>
+                                    </p>
+                                    <p class="text-lg text-gray-700">
+                                        <strong>${t.contactPhone}</strong> +91XXXXXX29
+                                    </p>
+                                    <p class="text-lg text-gray-700">
+                                        <strong>${t.contactAddress}</strong> sasaram Rohtash Bihar 821308 
+                                    </p>
+                                    <p class="text-lg text-gray-700">
+                                        ${t.contactFormInstruction}
+                                    </p>
+                                </div>
+                                <!-- Simple Contact Form Placeholder -->
+                                <form class="mt-8 space-y-4">
+                                    <div>
+                                        <label for="name" class="block text-gray-700 text-sm font-semibold mb-2 text-left">${t.nameLabel}</label>
+                                        <input type="text" id="name" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="${t.namePlaceholder}">
+                                    </div>
+                                    <div>
+                                        <label for="email" class="block text-gray-700 text-sm font-semibold mb-2 text-left">${t.emailLabel}</label>
+                                        <input type="email" id="email" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="${t.emailPlaceholder}">
+                                    </div>
+                                    <div>
+                                        <label for="message" class="block text-gray-700 text-sm font-semibold mb-2 text-left">${t.messageLabel}</label>
+                                        <textarea id="message" rows="5" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="${t.messagePlaceholder}"></textarea>
+                                    </div>
+                                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition duration-300 ease-in-out transform hover:scale-105 shadow-md">
+                                        ${t.sendMessageButton}
+                                    </button>
+                                </form>
+                            </div>
+                        `;
+                        break;
+                    case 'terms':
+                        htmlContent = `
+                            <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-2xl text-left">
+                                <h1 class="text-4xl font-extrabold text-blue-700 mb-6 text-center">${t.termsTitle}</h1>
+                                <h2 class="text-2xl font-semibold text-blue-600 mb-4">${t.termsAcceptanceHeading}</h2>
+                                <p class="text-gray-700 mb-4">
+                                    ${t.termsAcceptanceContent}
+                                </p>
+
+                                <h2 class="text-2xl font-semibold text-blue-600 mb-4">${t.termsUseHeading}</h2>
+                                <p class="text-gray-700 mb-4">
+                                    ${t.termsUseContent}
+                                </p>
+
+                                <h2 class="text-2xl font-semibold text-blue-600 mb-4">${t.termsAccuracyHeading}</h2>
+                                <p class="text-gray-700 mb-4">
+                                    ${t.termsAccuracyContent}
+                                </p>
+
+                                <h2 class="text-2xl font-semibold text-blue-600 mb-4">${t.termsPrivacyHeading}</h2>
+                                <p class="text-gray-700 mb-4">
+                                    ${t.termsPrivacyContent}
+                                </p>
+
+                                <h2 class="text-2xl font-semibold text-blue-600 mb-4">${t.termsIPHeading}</h2>
+                                <p class="text-gray-700 mb-4">
+                                    ${t.termsIPContent}
+                                </p>
+
+                                <h2 class="text-2xl font-semibold text-blue-600 mb-4">${t.termsLiabilityHeading}</h2>
+                                <p class="text-gray-700 mb-4">
+                                    ${t.termsLiabilityContent}
+                                </p>
+
+                                <h2 class="text-2xl font-semibold text-blue-600 mb-4">${t.termsChangesHeading}</h2>
+                                <p class="text-gray-700 mb-4">
+                                    ${t.termsChangesContent}
+                                </p>
+                            </div>
+                        `;
+                        break;
+                    default:
+                        htmlContent = `
+                            <div class="text-center p-8 bg-white rounded-xl shadow-2xl">
+                                <h1 class="text-4xl font-extrabold text-red-600 mb-4">${t.pageNotFoundTitle}</h1>
+                                <p class="text-lg text-gray-700">${t.pageNotFoundMessage}</p>
+                                <a href="#home" class="mt-6 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">${t.goToHomeButton}</a>
+                            </div>
+                        `;
+                }
+                contentDiv.innerHTML = htmlContent;
+
+                // Re-attach event listener for the calculate button if on home page
+                if (page === 'home') {
+                    const calculateAgeBtn = document.getElementById('calculateAgeBtn');
+                    if (calculateAgeBtn) {
+                        calculateAgeBtn.addEventListener('click', calculateAge);
+                    }
+                    // Update error message text after content is loaded
+                    const errorMessageDiv = document.getElementById('error-message');
+                    if (errorMessageDiv) {
+                         errorMessageDiv.textContent = t.errorMessageInvalidDate; // Default error message
+                    }
+                }
+            }
+
+            // Age Calculation Logic
+            function calculateAge() {
+                const birthDateInput = document.getElementById('birthDate');
+                const resultBoxesDiv = document.getElementById('result-boxes');
+                const errorMessageDiv = document.getElementById('error-message');
+                const t = translations[currentLanguage]; // Shorthand for current translations
+
+                const yearsDisplay = document.getElementById('years-display');
+                const monthsDisplay = document.getElementById('months-display');
+                const daysDisplay = document.getElementById('days-display');
+
+                // Hide previous results and errors
+                resultBoxesDiv.classList.add('hidden');
+                errorMessageDiv.classList.add('hidden');
+                // Remove animation class to re-trigger on next calculation
+                resultBoxesDiv.querySelectorAll('div').forEach(box => {
+                    box.classList.remove('animate-fadeInScale');
+                });
+
+
+                const birthDateValue = birthDateInput.value;
+
+                if (!birthDateValue) {
+                    errorMessageDiv.textContent = t.errorMessageInvalidDate;
+                    errorMessageDiv.classList.remove('hidden');
+                    return;
+                }
+
+                const birthDate = new Date(birthDateValue);
+                const today = new Date();
+
+                // Set today's time to midnight for accurate day calculation
+                today.setHours(0, 0, 0, 0);
+                birthDate.setHours(0, 0, 0, 0);
+
+                if (birthDate > today) {
+                    errorMessageDiv.textContent = t.errorMessageFutureDate;
+                    errorMessageDiv.classList.remove('hidden');
+                    return;
+                }
+
+                let years = today.getFullYear() - birthDate.getFullYear();
+                let months = today.getMonth() - birthDate.getMonth();
+                let days = today.getDate() - birthDate.getDate();
+
+                // Adjust months and years if days are negative
+                if (days < 0) {
+                    months--;
+                    // Get the number of days in the previous month
+                    const prevMonthLastDay = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+                    days = prevMonthLastDay - birthDate.getDate() + today.getDate();
+                }
+
+                // Adjust years if months are negative
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+
+                // Update the content of the individual display elements
+                yearsDisplay.textContent = years;
+                monthsDisplay.textContent = months;
+                daysDisplay.textContent = days;
+
+                resultBoxesDiv.classList.remove('hidden');
+                // Add animation class to trigger animation
+                resultBoxesDiv.querySelectorAll('div').forEach(box => {
+                    box.classList.add('animate-fadeInScale');
+                });
+            }
+
+            // Mobile menu toggle functionality
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.remove('translate-x-full');
+                mobileMenuOverlay.classList.remove('hidden');
+            });
+
+            closeMobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenuOverlay.classList.add('hidden');
+            });
+
+            mobileMenuOverlay.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenuOverlay.classList.add('hidden');
+            });
+
+            // Handle navigation clicks
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Use currentTarget to ensure we get the <a> element that the listener is attached to
+                    const href = e.currentTarget.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const page = href.substring(1); // Get page name from href (e.g., #home -> home)
+                        loadPage(page);
+                        // Close mobile menu if open
+                        mobileMenu.classList.add('translate-x-full');
+                        mobileMenuOverlay.classList.add('hidden');
+                    }
+                });
+            });
+
+            footerNavLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Use currentTarget to ensure we get the <a> element that the listener is attached to
+                    const href = e.currentTarget.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        const page = href.substring(1); // Get page name from href (e.g., #home -> home)
+                        loadPage(page);
+                    }
+                });
+            });
+
+            // Language switcher event listener
+            languageSwitcher.addEventListener('change', (e) => {
+                updateContentLanguage(e.target.value);
+            });
+
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Initial page load based on hash or default to home, and apply stored language
+            updateContentLanguage(currentLanguage);
+        });
+    </script>
+</body>
+</html>
